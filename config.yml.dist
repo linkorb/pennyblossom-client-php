@@ -1,0 +1,4 @@
+debug: false
+api_url: https://api.pennyblossom.nl/orderapi
+username: my_username
+api_key: my_api_key

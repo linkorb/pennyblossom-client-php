@@ -1,2 +1,4 @@
-# webshop-client-php
-A PHP client of Ponnyblossom
+The PennyBlossom PHP client
+==============
+
+Connect to the PennyBlossom system from your application.
