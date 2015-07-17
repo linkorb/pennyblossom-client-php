@@ -8,6 +8,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Pennyblossom\Client\Client;
 use Symfony\Component\Yaml\Parser as YamlParser;
+use Pennyblossom\Client\Model\Order;
+use Pennyblossom\Client\Model\Address;
+use Pennyblossom\Client\Model\ProductModel;
 
 class CreateOrderCommand extends Command
 {
@@ -41,7 +44,7 @@ class CreateOrderCommand extends Command
         }
 
         $c = new Client();
-        $output->writeln($c->create($data));
+        $output->writeln($c->createOrder($data));
     }
 
     private function loadFromExampleFile($fileName)
@@ -50,7 +53,27 @@ class CreateOrderCommand extends Command
         $data = $parser->parse(file_get_contents(__DIR__.'/../../example/'.$fileName.'.yml'));
         $data['debug'] = true;
 
-        return $data;
+        $order = new Order();
+        $order->setEmail($data['email'])
+            ->setCustomerKey($data['customer_key'])
+            ->setPricelistKey($data['pricelist_key'])
+            ->setPaymentMethodCode($data['payment_method_code'])
+            ->setVatNumber($data['vat_number'])
+            ->setNote($data['note']);
+
+        foreach ($data['address'] as $type => $a) {
+            $address = new Address($type);
+            $address->setCompany($a['company'])
+                ->setFullname($a['fullname'])
+                ->setAddressLine($a['address'])
+                ->setPostalCode($a['postalcode'])
+                ->setCity($a['city'])
+                ->setCountry($a['country']);
+
+            $order->addAddress($address);
+        }
+
+        return $order;
     }
 
     private function loadFromArray($array = null)

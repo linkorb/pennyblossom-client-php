@@ -25,7 +25,7 @@ class Client
         return $this->parameters;
     }
 
-    public function create($orderData)
+    public function createOrder($orderData)
     {
         $guzzleclient = new GuzzleClient();
 
