@@ -5,6 +5,7 @@ namespace Pennyblossom\Client;
 // use GuzzleHttp\Post\PostFile;
 use GuzzleHttp\Client as GuzzleClient;
 use Symfony\Component\Yaml\Parser as YamlParser;
+use Pennyblossom\Client\Model\Order;
 
 class Client
 {
@@ -25,18 +26,18 @@ class Client
         return $this->parameters;
     }
 
-    public function createOrder($orderData)
+    public function createOrder(Order $order)
     {
         $guzzleclient = new GuzzleClient();
 
-        $orderData['debug'] = !!$this->parameters['debug'];
+        // $orderData['debug'] = !!$this->parameters['debug'];
 
         $res = $guzzleclient->post(
             ($this->parameters['api_url'].'/create'),
             [
                 'auth' => [$this->parameters['username'], $this->parameters['api_key']],
                 'headers' => ['content-type' => 'application/json'],
-                'body' => json_encode($orderData),
+                'body' => json_encode($order->serialize()),
             ]
         );
 

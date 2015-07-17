@@ -38,14 +38,13 @@ class CreateOrderCommand extends Command
     {
         if ($input->getOption('filename')) {
             $order = $this->loadFromExampleFile($input->getOption('filename'));
-            $data = $order->serialize();
         } else {
-            $data = $input->getOption('data');
-            $data = json_decode($data);
+            // $data = $input->getOption('data');
+            // $data = json_decode($data);
         }
 
         $client = new Client();
-        $output->writeln($client->createOrder($data));
+        $output->writeln($client->createOrder($order));
     }
 
     private function loadFromExampleFile($fileName)
