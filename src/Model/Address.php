@@ -108,4 +108,16 @@ class Address
 
         return $this;
     }
+
+    public function serialize()
+    {
+        return [
+            'company' => $this->company,
+            'fullname' => $this->fullname,
+            'address' => $this->addressLine,
+            'postalcode' => $this->postalCode,
+            'city' => $this->city,
+            'country' => $this->country,
+        ];
+    }
 }

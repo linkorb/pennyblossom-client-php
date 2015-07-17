@@ -18,13 +18,35 @@ cp config.yml.dist config.yml
 <?php
 
 use Pennyblossom\Client\Client;
+use Pennyblossom\Client\Model\Order;
+use Pennyblossom\Client\Model\Address;
+use Pennyblossom\Client\Model\ProductModel;
 
-// construct the order information array
-$data = [];
+// construct the order
+$order = new Order();
+$order->setEmail($email)
+    ->setCustomerKey($customer_key)
+    ->setPricelistKey($pricelist_key)
+    ->setPaymentMethodCode($payment_method_code)
+    ->setVatNumber($vat_number)
+    ->setNote($note);
+
+$address = new Address('billing');
+$address->setCompany($company)
+    ->setFullname($fullname)
+    ->setAddressLine($address)
+    ->setPostalCode($postalcode)
+    ->setCity($city)
+    ->setCountry($country);
+$order->addAddress($address);
+
+$model = new ProductModel();
+$model->setCode($code)->setQuantity($quantity);
+$order->addProductModel($model);
 
 // create the order
 $client = new Client();
-$client->create($data);
+$client->createOrder($order->serialize());
 
 ```
 ### Create order via command line

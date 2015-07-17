@@ -99,4 +99,35 @@ class Order
 
         return $this;
     }
+
+    private $productModels = [];
+
+    public function addProductModel(ProductModel $model)
+    {
+        $this->productModels []= $model;
+
+        return $this;
+    }
+
+    public function serialize()
+    {
+        foreach ($this->addresses as $address) {
+            $addresses[$address->getType()] = $address->serialize();
+        }
+
+        foreach ($this->productModels as $model) {
+            $models []= $model->serialize();
+        }
+
+        return [
+            'customer_key' => $this->customerKey,
+            'pricelist_key' => $this->prielistKey,
+            'payment_method_code' => $this->paymentMethodCode,
+            'email' => $this->email,
+            'vat_number' => $this->vatNumber,
+            'note' => $this->note,
+            'address' => $addresses,
+            'product_model' => $models,
+        ];
+    }
 }

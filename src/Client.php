@@ -30,7 +30,6 @@ class Client
         $guzzleclient = new GuzzleClient();
 
         $orderData['debug'] = !!$this->parameters['debug'];
-        // $orderData['debug'] = false;
 
         $res = $guzzleclient->post(
             ($this->parameters['api_url'].'/create'),

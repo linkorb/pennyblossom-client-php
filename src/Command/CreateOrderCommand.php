@@ -37,14 +37,15 @@ class CreateOrderCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getOption('filename')) {
-            $data = $this->loadFromExampleFile($input->getOption('filename'));
+            $order = $this->loadFromExampleFile($input->getOption('filename'));
+            $data = $order->serialize();
         } else {
             $data = $input->getOption('data');
             $data = json_decode($data);
         }
 
-        $c = new Client();
-        $output->writeln($c->createOrder($data));
+        $client = new Client();
+        $output->writeln($client->createOrder($data));
     }
 
     private function loadFromExampleFile($fileName)
@@ -69,8 +70,13 @@ class CreateOrderCommand extends Command
                 ->setPostalCode($a['postalcode'])
                 ->setCity($a['city'])
                 ->setCountry($a['country']);
-
             $order->addAddress($address);
+        }
+
+        foreach ($data['product_model'] as $m) {
+            $model = new ProductModel();
+            $model->setCode($m['code'])->setQuantity($m['quantity']);
+            $order->addProductModel($model);
         }
 
         return $order;
