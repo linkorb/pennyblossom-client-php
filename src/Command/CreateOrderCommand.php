@@ -33,10 +33,13 @@ class CreateOrderCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $data = $input->getOption('data');
         if ($input->getOption('filename')) {
             $data = $this->loadFromExampleFile($input->getOption('filename'));
+        } else {
+            $data = $input->getOption('data');
+            $data = json_decode($data);
         }
+
         $c = new Client();
         $output->writeln($c->create($data));
     }
@@ -54,8 +57,12 @@ class CreateOrderCommand extends Command
     {
         if ($array === null) {
             $array = [
+                'customer_key' => '81977',
+                'pricelist_key' => '99b0380f-c644-43eb-bc53-978cd30093c5',
+                'payment_method_code' => 'POS-PIN',
                 'email' => 'h.wang@linkorb.com',
                 'vat_number' => '893764837042',
+                'note' => 'This is a test order',
                 'address' => [
                     'billing' => [
                         'company' => 'LinkORB',
@@ -71,6 +78,10 @@ class CreateOrderCommand extends Command
                         'postalcode' => '5658 BC',
                         'city' => 'Oirschot',
                     ],
+                ],
+                'product_model' => [
+                    ['code' => '3269-001', 'quantity' => 2],
+                    ['code' => '3285-001', 'quantity' => 1],
                 ],
             ];
         }

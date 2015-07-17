@@ -1,5 +1,9 @@
+customer_key: 81977
+pricelist_key: "99b0380f-c644-43eb-bc53-978cd30093c5"
+payment_method_code: POS-PIN
 email: example@pennyblossom.nl
 vat_number: 23456754321
+note: "This is a test order"
 address:
     billing:
         company: Pennyblossom
@@ -13,3 +17,11 @@ address:
         address: Kerkstraat 4a
         postalcode: "5658 BC"
         city: Oirschot
+product_model:
+    -
+        # id: 39
+        code: "3269-001"
+        quantity: 2
+    -
+        code: "3285-001"
+        quantity: 1
