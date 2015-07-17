@@ -46,7 +46,7 @@ $order->addProductModel($model);
 
 // create the order
 $client = new Client();
-$client->createOrder($order->serialize());
+$client->createOrder($order);
 
 ```
 ### Create order via command line
