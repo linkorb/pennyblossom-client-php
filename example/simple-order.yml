@@ -1,0 +1,15 @@
+email: example@pennyblossom.nl
+vat_number: 23456754321
+address:
+    billing:
+        company: Pennyblossom
+        fullname: Hongliang
+        address: Kerkstraat 4a
+        postalcode: "5658 BC"
+        city: Oirschot
+    shipping:
+        company: Pennyblossom
+        fullname: Hongliang
+        address: Kerkstraat 4a
+        postalcode: "5658 BC"
+        city: Oirschot
