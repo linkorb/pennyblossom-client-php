@@ -31,6 +31,8 @@ $order->setEmail($email)
     ->setVatNumber($vat_number)
     ->setNote($note);
 
+// set addresses
+// do the same for shipping address
 $address = new Address('billing');
 $address->setCompany($company)
     ->setFullname($fullname)
@@ -40,6 +42,7 @@ $address->setCompany($company)
     ->setCountry($country);
 $order->addAddress($address);
 
+// add product models, can be multiple models
 $model = new ProductModel();
 $model->setCode($code)->setQuantity($quantity);
 $order->addProductModel($model);
@@ -54,7 +57,7 @@ $client->createOrder($order);
 # data is a JSON of order information array
  bin/pennyblossom order:create --data={"vat_number": "123456789", ...}
 ```
-### Order information array construction
+### Example Order information construction
 The order information can be loaded via array or yaml file. Here is an example yaml file.
 ```yml
 customer_key: 81977
@@ -83,5 +86,4 @@ product_model:
     -
         code: "3285-001"
         quantity: 1
-
 ```

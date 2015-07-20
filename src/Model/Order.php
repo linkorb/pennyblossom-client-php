@@ -109,7 +109,7 @@ class Order
         return $this;
     }
 
-    public function serialize()
+    public function serialize($debug = false)
     {
         foreach ($this->addresses as $address) {
             $addresses[$address->getType()] = $address->serialize();
@@ -120,6 +120,7 @@ class Order
         }
 
         return [
+            'debug' => !!$debug,
             'customer_key' => $this->customerKey,
             'pricelist_key' => $this->prielistKey,
             'payment_method_code' => $this->paymentMethodCode,

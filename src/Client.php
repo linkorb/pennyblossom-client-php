@@ -37,12 +37,13 @@ class Client
             [
                 'auth' => [$this->parameters['username'], $this->parameters['api_key']],
                 'headers' => ['content-type' => 'application/json'],
-                'body' => json_encode($order->serialize()),
+                'body' => json_encode($order->serialize(!!$this->parameters['debug'])),
             ]
         );
 
         $body = $res->getBody();
         if ($body) {
+            // var_dump($body->read(2048));die;
             return $body->read(2048);
         }
 
