@@ -44,7 +44,19 @@ class CreateOrderCommand extends Command
         }
 
         $client = new Client();
-        $output->writeln($client->createOrder($order));
+        $res = $client->createOrder($order);
+
+        if ($res === false) {
+            $output->writeln('<error>Unknown error</error>');
+        } else {
+            $res = json_decode($res, true);
+            if ($res['success']) {
+                $output->writeln('<info>'.$res['status_message'].'</info>');
+                $output->writeln('<info>Order key: '.$res['order']['key'].'</info>');
+            } else {
+                $output->writeln('<error>'.$res['status_message'].'</error>');
+            }
+        }
     }
 
     private function loadFromExampleFile($fileName)

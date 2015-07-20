@@ -43,7 +43,6 @@ class Client
 
         $body = $res->getBody();
         if ($body) {
-            // var_dump($body->read(2048));die;
             return $body->read(2048);
         }
 

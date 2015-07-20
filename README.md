@@ -49,7 +49,21 @@ $order->addProductModel($model);
 
 // create the order
 $client = new Client();
-$client->createOrder($order);
+$result = $client->createOrder($order);
+
+// $result is a JSON of feedback
+// here is an exmpla how to parse the result
+if ($res === false) {
+    echo '<error>Unknown error</error>';
+} else {
+    $res = json_decode($res, true);
+    if ($res['success']) {
+        echo '<info>'.$res['status_message'].'</info>';
+        echo '<info>Order key: '.$res['order']['key'].'</info>';
+    } else {
+        echo '<error>'.$res['status_message'].'</error>';
+    }
+}
 
 ```
 ### Create order via command line
